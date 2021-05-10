@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -43,12 +44,12 @@ bool isValidPassword(char *password, int bufferSize)
 // Write Cipher Text: Input File -> XOR Cipher -> Output File
 void writeChipherText(FILE *input, FILE *output, char *password)
 {
-    char buffer[CIPHER_BUFFER_SIZE];
+    uint8_t buffer[CIPHER_BUFFER_SIZE];
     char *cipherByte = password;
     int bytesRead;
-    while ((bytesRead = fread(buffer, sizeof(char), CIPHER_BUFFER_SIZE, input)) != 0)
+    while ((bytesRead = fread(buffer, sizeof(uint8_t), CIPHER_BUFFER_SIZE, input)) != 0)
     {
-        char *inputByte = buffer;
+        uint8_t *inputByte = buffer;
         for (int i = 0; i < bytesRead; i++)
         {
             *inputByte++ ^= *cipherByte++;
@@ -57,7 +58,7 @@ void writeChipherText(FILE *input, FILE *output, char *password)
                 cipherByte = password;
             }
         }
-        fwrite(buffer, sizeof(char), bytesRead, output);
+        fwrite(buffer, sizeof(uint8_t), bytesRead, output);
     }
 }
 
