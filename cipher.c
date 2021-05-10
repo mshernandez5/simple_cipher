@@ -18,7 +18,7 @@ bool isValidPassword(char *password, int bufferSize)
     bool uppercase = false;
     bool lowercase = false;
     bool special = false;
-    for (char *c = password; c; c++)
+    for (char *c = password; *c; c++)
     {
         if (uppercase && lowercase && special)
         {
@@ -46,7 +46,7 @@ void writeChipherText(FILE *input, FILE *output, char *password)
     char buffer[CIPHER_BUFFER_SIZE];
     char *cipherByte = password;
     int bytesRead;
-    while (bytesRead = fread(buffer, sizeof(char), CIPHER_BUFFER_SIZE, input) != 0)
+    while ((bytesRead = fread(buffer, sizeof(char), CIPHER_BUFFER_SIZE, input)) != 0)
     {
         char *inputByte = buffer;
         for (int i = 0; i < bytesRead; i++)
